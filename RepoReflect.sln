@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console.App", "Console.App\Console.App.csproj", "{ECA795B1-A16F-4F8B-A4DE-AAA3294E642C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoReflect.App", "RepoReflect.App\RepoReflect.App.csproj", "{ECA795B1-A16F-4F8B-A4DE-AAA3294E642C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

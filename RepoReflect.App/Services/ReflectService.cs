@@ -12,11 +12,7 @@ public class ReflectService
     {
         _httpClientFactory = httpClientFactory;
     }
-    /*
-     curl --header "PRIVATE-TOKEN: TOKEN" \
-       --url "https://gitlab.com/api/v4/projects/PROJECTID/repository/commits"
-     */
-
+   
     public async Task GetHistory(string privateKey, string projectId, string author)
     {
         var client = _httpClientFactory.CreateClient();
@@ -28,7 +24,7 @@ public class ReflectService
         var page = 1;
         bool hasMorePages = true;
         
-        while(hasMorePages)
+        while (hasMorePages)
         {
             var response = await client.GetAsync($"https://gitlab.com/api/v4/projects/{projectId}/repository/commits?page={page}&per_page=99&author={author}");
             

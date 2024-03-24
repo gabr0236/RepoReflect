@@ -45,6 +45,16 @@ public class ReflectService
         System.Console.WriteLine("Exiting GetHistory");
     }
 
+    public async Task CreateGitRepo(string repoName, string repoRelativePath)
+    {
+        var sb = new StringBuilder();
+        await Cli.Wrap("/bin/bash")
+            .WithArguments($"-c \"cd {repoRelativePath} && mkdir {repoName} && cd {repoName} && pwd\"")
+            .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
+
+        System.Console.WriteLine(sb);
+    }
+
     private record GitLabCommit(
         [property: JsonPropertyName("id")] string Id,
         [property: JsonPropertyName("title")] string Title, //TODO: delete

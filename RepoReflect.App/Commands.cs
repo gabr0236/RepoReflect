@@ -17,4 +17,13 @@ public class Commands
     {
         return _reflectService.GetHistory(privateKey, projectId, author);
     }
+
+    [Command("test")]
+    public Task test([Option("n")] string name, [Option("rp")] string relativePath)
+    {
+        System.Console.WriteLine(name);
+        System.Console.WriteLine(relativePath);
+        
+        return _reflectService.CreateGitRepo(name, relativePath);
+    }
 }

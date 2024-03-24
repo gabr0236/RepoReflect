@@ -52,9 +52,14 @@ public class ReflectService
     {
         var sb = new StringBuilder();
         await Cli.Wrap("/bin/bash")
-            .WithArguments($"-c \"cd {repoRelativePath} && mkdir {repoName} && cd {repoName} && pwd\"")
+            .WithArguments($"-c \"cd {repoRelativePath} && mkdir {repoName} && cd {repoName} && touch README.md && pwd\"")
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
-
+        
+         await Cli.Wrap("/bin/bash")
+            .WithArguments($"-c \"git init && git add . && git commit -m \"Initial Commit\"\"")
+            .WithWorkingDirectory($"{repoRelativePath}/{repoName}")
+            .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
+        
         System.Console.WriteLine(sb);
     }
 

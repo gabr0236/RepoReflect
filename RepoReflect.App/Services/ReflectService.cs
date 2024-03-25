@@ -49,38 +49,38 @@ public class ReflectService
     }
 
     public async Task CreateGitRepo(string repoName, string repoRelativeCreatePath)
+    public async Task CreateGitRepo(string repoName, string repoDirPath)
     {
         var sb = new StringBuilder();
         await Cli.Wrap("/bin/bash")
-            .WithArguments($"-c \"cd {repoRelativeCreatePath} && mkdir {repoName} && cd {repoName} && touch README.md && pwd\"")
+            .WithArguments($"-c \"cd {repoDirPath} && mkdir {repoName} && cd {repoName} && touch README.md && pwd\"")
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
 
-        var repoRelativePath = repoRelativeCreatePath + "/" + repoName;
+        var repoPath = repoDirPath + "/" + repoName;
         
          await Cli.Wrap("/bin/bash")
             .WithArguments($"-c \"git init && git add . && git commit -m \"Initial Commit\"\"")
-            .WithWorkingDirectory(repoRelativePath)
+            .WithWorkingDirectory(repoPath)
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
          
          var repoHttpsUrl = string.Empty;
          await Cli.Wrap("gh")
-             .WithArguments($"repo create {repoName} --private") //TODO: validate repo name first?
+             .WithArguments($"repo create {repoName} --private")
              .WithStandardOutputPipe(PipeTarget.ToDelegate((res) => repoHttpsUrl = res ))
              .ExecuteAsync();
          
          var split = repoHttpsUrl.Split("/");
-         //https://github.com/user/repo
-         var usernameAndRepoName = split[4] + "/" + split[5];
+         var usernameAndRepoName = split[4] + "/" + split[5]; //https://github.com/user/repo
          var sshUrl = $"git@github.com:{usernameAndRepoName}.git";
          
          await Cli.Wrap("git")
              .WithArguments($"remote add origin {sshUrl}")
-             .WithWorkingDirectory(repoRelativePath)
+             .WithWorkingDirectory(repoPath)
              .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
          
          await Cli.Wrap("git")
              .WithArguments($"push -u origin master")
-             .WithWorkingDirectory(repoRelativePath)
+             .WithWorkingDirectory(repoPath)
              .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
          
         System.Console.WriteLine(sb);

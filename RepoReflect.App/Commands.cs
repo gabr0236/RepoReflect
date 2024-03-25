@@ -20,10 +20,11 @@ public class Commands
 
     [Command("test")]
     public Task test([Option("n")] string name, [Option("rp")] string relativePath)
+    public Task test([Option("n")] string name, [Option("rp")] string repoPath)
     {
         System.Console.WriteLine(name);
-        System.Console.WriteLine(relativePath);
+        System.Console.WriteLine(repoPath);
         
-        return _reflectService.CreateGitRepo(name, relativePath);
+        return _reflectService.CreateGitRepo(name, repoPath);
     }
 }

@@ -48,16 +48,18 @@ public class ReflectService
         System.Console.WriteLine("Exiting GetHistory");
     }
 
-    public async Task CreateGitRepo(string repoName, string repoRelativePath)
+    public async Task CreateGitRepo(string repoName, string repoRelativeCreatePath)
     {
         var sb = new StringBuilder();
         await Cli.Wrap("/bin/bash")
-            .WithArguments($"-c \"cd {repoRelativePath} && mkdir {repoName} && cd {repoName} && touch README.md && pwd\"")
+            .WithArguments($"-c \"cd {repoRelativeCreatePath} && mkdir {repoName} && cd {repoName} && touch README.md && pwd\"")
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
+
+        var repoRelativePath = repoRelativeCreatePath + "/" + repoName;
         
          await Cli.Wrap("/bin/bash")
             .WithArguments($"-c \"git init && git add . && git commit -m \"Initial Commit\"\"")
-            .WithWorkingDirectory($"{repoRelativePath}/{repoName}")
+            .WithWorkingDirectory(repoRelativePath)
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
         
         System.Console.WriteLine(sb);

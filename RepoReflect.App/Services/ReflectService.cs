@@ -61,7 +61,12 @@ public class ReflectService
             .WithArguments($"-c \"git init && git add . && git commit -m \"Initial Commit\"\"")
             .WithWorkingDirectory(repoRelativePath)
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
-        
+         
+         var repoHttpsUrl = string.Empty;
+         await Cli.Wrap("gh")
+             .WithArguments($"repo create {repoName} --private") //TODO: validate repo name first?
+             .WithStandardOutputPipe(PipeTarget.ToDelegate((res) => repoHttpsUrl = res ))
+             .ExecuteAsync();
         System.Console.WriteLine(sb);
     }
 

@@ -67,6 +67,22 @@ public class ReflectService
              .WithArguments($"repo create {repoName} --private") //TODO: validate repo name first?
              .WithStandardOutputPipe(PipeTarget.ToDelegate((res) => repoHttpsUrl = res ))
              .ExecuteAsync();
+         
+         var split = repoHttpsUrl.Split("/");
+         //https://github.com/user/repo
+         var usernameAndRepoName = split[4] + "/" + split[5];
+         var sshUrl = $"git@github.com:{usernameAndRepoName}.git";
+         
+         await Cli.Wrap("git")
+             .WithArguments($"remote add origin {sshUrl}")
+             .WithWorkingDirectory(repoRelativePath)
+             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
+         
+         await Cli.Wrap("git")
+             .WithArguments($"push -u origin master")
+             .WithWorkingDirectory(repoRelativePath)
+             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sb)).ExecuteAsync();
+         
         System.Console.WriteLine(sb);
     }
 

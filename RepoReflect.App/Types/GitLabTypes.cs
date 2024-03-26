@@ -2,6 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace Console.App.Types;
 
+public record GitLabCommit(
+    [property: JsonPropertyName("id")] string Id,
+    [property: JsonPropertyName("created_at")] DateTime CreatedAt);
+
 public record GitlabEvent(
     [property: JsonPropertyName("id")] long Id,
     [property: JsonPropertyName("project_id")]

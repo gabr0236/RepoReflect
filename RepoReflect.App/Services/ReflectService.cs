@@ -69,7 +69,9 @@ public class ReflectService
             var progress = i * 100 / commits.Count;
             System.Console.Write("\r{0}% ", progress);
         }
-        System.Console.Write("\r100%");
+        System.Console.WriteLine("\r100%");
+        
+        System.Console.WriteLine($"Successfully added {commits.Count} to {pathToRepo}");
     }
 
     public async Task CreateGitRepo(string repoName, string repoDirPath)

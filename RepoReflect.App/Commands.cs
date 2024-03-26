@@ -19,13 +19,9 @@ public class Commands
         return _reflectService.ReflectNewRepo(privateKey, projectId, author, repoPath );
     }
 
-    [Command("test")]
-    public Task test([Option("n")] string name, [Option("rp")] string relativePath)
+    [Command("create")]
     public Task test([Option("n")] string name, [Option("rp")] string repoPath)
     {
-        System.Console.WriteLine(name);
-        System.Console.WriteLine(repoPath);
-        
         return _reflectService.CreateGitRepo(name, repoPath);
     }
 }

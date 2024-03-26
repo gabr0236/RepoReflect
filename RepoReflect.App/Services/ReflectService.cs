@@ -114,10 +114,7 @@ public class ReflectService
     }
 
     private record GitLabCommit(
+    public record GitLabCommit(
         [property: JsonPropertyName("id")] string Id,
-        [property: JsonPropertyName("title")] string Title, //TODO: delete
-        [property: JsonPropertyName("created_at")]
-        DateTime CreatedAt,
-        [property: JsonPropertyName("message")]
-        string Message); //TODO: delete
+        [property: JsonPropertyName("created_at")] DateTime CreatedAt);
 }

@@ -49,7 +49,7 @@ public class ReflectService
         return commits;
     }
 
-    public async Task ReflectNewRepo(string privateKey, string projectId, string author, string pathToRepo)
+    public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo, string customCommitMessage = "Committed to master on private Gitlab repository")
     {
         var commits = await GetGitLabHistory(privateKey, projectId, author);
 
@@ -61,7 +61,7 @@ public class ReflectService
             await Cli.Wrap("git")
                 //TODO allow users to pass name of project for commit message eg. "Committed to X repository"
                 //TODO "Committed to Gitlab repository" is not completely correct as its when the commit was merged/rebased to master.
-                .WithArguments($"commit --allow-empty --date \"{commits[i].CreatedAt}\" -m \"Committed to Gitlab repository\" -m \"{commits[i].Id}\"") 
+                .WithArguments($"commit --allow-empty --date \"{commits[i].CreatedAt}\" -m \"{customCommitMessage}\" -m \"{commits[i].Id}\"") 
                 .WithWorkingDirectory(pathToRepo)
                 .WithValidation(CommandResultValidation.None) // For some reason "git commit --allow-empty returns a non-zero exit code"
                 .ExecuteAsync();

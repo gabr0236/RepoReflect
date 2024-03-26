@@ -13,10 +13,10 @@ public class Commands
     }
 
     //Author can be either author email or name
-    [Command("reflect")]
-    public Task Reflect(string privateKey, string projectId, string author, string repoPath)
+    [Command("reflect-commits")]
+    public Task ReflectCommitsToExistingRepo(string privateKey, string projectId,string author, string repoPath, [Option] string customMessage)
     {
-        return _reflectService.ReflectNewRepo(privateKey, projectId, author, repoPath );
+        return _reflectService.ReflectCommitsToExistingRepo(privateKey, projectId, author, repoPath, customMessage);
     }
 
     [Command("create")]

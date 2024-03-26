@@ -14,7 +14,7 @@ public class ReflectService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task GetHistory(string privateKey, string projectId, string author)
+    public async Task<List<GitLabCommit>> GetGitLabHistory(string privateKey, string projectId, string author)
     {
         var client = _httpClientFactory.CreateClient();
 

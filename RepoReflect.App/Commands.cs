@@ -20,7 +20,7 @@ public class Commands
     }
 
     [Command("create")]
-    public Task test([Option("n")] string name, [Option("rp")] string repoPath, bool? isPrivate)
+    public Task CreateRepo([Option("n")] string name, [Option("rp")] string repoPath, bool? isPrivate)
     {
         return _reflectService.CreateGitRepo(name, repoPath, isPrivate);
     }

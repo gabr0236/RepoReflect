@@ -14,7 +14,7 @@ public class ReflectService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<List<GitLabCommit>> GetGitLabHistory(string privateKey, string projectId, string author)
+    public async Task<List<GitLabCommit>> GetGitLabCommitHistory(string privateKey, string projectId, string author)
     {
         var client = _httpClientFactory.CreateClient();
 
@@ -51,6 +51,7 @@ public class ReflectService
 
     public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo, string customCommitMessage = "Committed to master on private Gitlab repository")
     {
+        
         var commits = await GetGitLabHistory(privateKey, projectId, author);
 
         System.Console.WriteLine("Reflecting Commits...");
@@ -59,8 +60,6 @@ public class ReflectService
         {
             //TODO: also edit the time of this commit
             await Cli.Wrap("git")
-                //TODO allow users to pass name of project for commit message eg. "Committed to X repository"
-                //TODO "Committed to Gitlab repository" is not completely correct as its when the commit was merged/rebased to master.
                 .WithArguments($"commit --allow-empty --date \"{commits[i].CreatedAt}\" -m \"{customCommitMessage}\" -m \"{commits[i].Id}\"") 
                 .WithWorkingDirectory(pathToRepo)
                 .WithValidation(CommandResultValidation.None) // For some reason "git commit --allow-empty returns a non-zero exit code"
@@ -73,6 +72,8 @@ public class ReflectService
         
         System.Console.WriteLine($"Successfully added {commits.Count} to {pathToRepo}");
     }
+    
+    
 
     public async Task CreateGitRepo(string repoName, string repoDirPath)
     {

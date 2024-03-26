@@ -12,10 +12,11 @@ public class Commands
         _reflectService = reflectService;
     }
 
+    //Author can be either author email or name
     [Command("reflect")]
-    public Task Reflect(string privateKey, string projectId, string author)
+    public Task Reflect(string privateKey, string projectId, string author, string repoPath)
     {
-        return _reflectService.GetHistory(privateKey, projectId, author);
+        return _reflectService.ReflectNewRepo(privateKey, projectId, author, repoPath );
     }
 
     [Command("test")]

@@ -49,7 +49,29 @@ public class ReflectService
         return commits;
     }
 
-    public async Task CreateGitRepo(string repoName, string repoRelativeCreatePath)
+    public async Task ReflectNewRepo(string privateKey, string projectId, string author, string pathToRepo)
+    {
+        var commits = await GetGitLabHistory(privateKey, projectId, author);
+
+        System.Console.WriteLine("Reflecting Commits...");
+
+        for (var i = 0; i < commits.Count; i++)
+        {
+            //TODO: also edit the time of this commit
+            await Cli.Wrap("git")
+                //TODO allow users to pass name of project for commit message eg. "Committed to X repository"
+                //TODO "Committed to Gitlab repository" is not completely correct as its when the commit was merged/rebased to master.
+                .WithArguments($"commit --allow-empty --date \"{commits[i].CreatedAt}\" -m \"Committed to Gitlab repository\" -m \"{commits[i].Id}\"") 
+                .WithWorkingDirectory(pathToRepo)
+                .WithValidation(CommandResultValidation.None) // For some reason "git commit --allow-empty returns a non-zero exit code"
+                .ExecuteAsync();
+
+            var progress = i * 100 / commits.Count;
+            System.Console.Write("\r{0}% ", progress);
+        }
+        System.Console.Write("\r100%");
+    }
+
     public async Task CreateGitRepo(string repoName, string repoDirPath)
     {
         var sb = new StringBuilder();

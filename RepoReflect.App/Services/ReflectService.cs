@@ -45,7 +45,8 @@ public class ReflectService
         }
 
         System.Console.WriteLine($"{author} has this many commits: {commits.Count}");
-        System.Console.WriteLine("Exiting GetHistory");
+
+        return commits;
     }
 
     public async Task CreateGitRepo(string repoName, string repoRelativeCreatePath)

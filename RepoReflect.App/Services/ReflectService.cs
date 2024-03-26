@@ -76,7 +76,7 @@ public class ReflectService
     
     
 
-    public async Task CreateGitRepo(string repoName, string repoDirPath)
+    public async Task CreateGitRepo(string repoName, string repoDirPath, bool? isPrivate = false)
     {
         var sb = new StringBuilder();
         await Cli.Wrap("/bin/bash")
@@ -92,7 +92,7 @@ public class ReflectService
          
          var repoHttpsUrl = string.Empty;
          await Cli.Wrap("gh")
-             .WithArguments($"repo create {repoName} --private")
+             .WithArguments($"repo create {repoName} {(isPrivate!.Value ? "--private" : "")}")
              .WithStandardOutputPipe(PipeTarget.ToDelegate((res) => repoHttpsUrl = res ))
              .ExecuteAsync();
          

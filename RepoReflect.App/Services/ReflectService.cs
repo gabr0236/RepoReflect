@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CliWrap;
+using Console.App.Types;
 
 namespace Console.App.Services;
 

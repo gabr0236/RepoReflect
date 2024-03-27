@@ -1,6 +1,5 @@
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using CliWrap;
 using Console.App.Types;
 
@@ -9,10 +8,11 @@ namespace Console.App.Services;
 public class ReflectService
 {
     private readonly IHttpClientFactory _httpClientFactory;
-
-    public ReflectService(IHttpClientFactory httpClientFactory)
+    private readonly ILogger<ReflectService> _logger;
+    public ReflectService(IHttpClientFactory httpClientFactory, ILogger<ReflectService> logger)
     {
         _httpClientFactory = httpClientFactory;
+        _logger = logger;
     }
 
     public async Task<List<GitLabCommit>> GetGitLabCommitHistory(string privateKey, string projectId, string author)
@@ -85,7 +85,12 @@ public class ReflectService
         return events;
     }
 
-    public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo, string customCommitMessage = "Committed to Master")
+    public async Task ReflectCommitsToExistingRepo(
+        string privateKey,
+        string projectId,
+        string author,
+        string pathToRepo,
+        string customCommitMessage = "Committed to Master")
     {
         var commits = await GetGitLabCommitHistory(privateKey, projectId, author);
 
@@ -114,14 +119,10 @@ public class ReflectService
 
         System.Console.WriteLine("Reflecting Events...");
         
-        string message = "";
         for (var i = 0; i < events.Count; i++)
         {
-            message = events[i].ActionName + " " + events[i].TargetType ?? "unknown";
-            
-            //TODO: also edit the time of this commit
             await Cli.Wrap("git")
-                .WithArguments($"commit --allow-empty --date \"{events[i].CreatedAt}\" -m \"{message}\" -m \"{events[i].Id}\"") 
+                .WithArguments($"commit --allow-empty --date \"{events[i].CreatedAt}\" -m \"{Helpers.GetEventName(events[i], _logger)}\" -m \"{events[i].Id}\"") 
                 .WithWorkingDirectory(pathToRepo)
                 .WithValidation(CommandResultValidation.None) // For some reason "git commit --allow-empty returns a non-zero exit code"
                 .ExecuteAsync();

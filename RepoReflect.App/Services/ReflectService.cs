@@ -1,88 +1,16 @@
 using System.Text;
-using System.Text.Json;
 using CliWrap;
-using Console.App.Types;
 
 namespace Console.App.Services;
 
 public class ReflectService
 {
-    private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<ReflectService> _logger;
-    public ReflectService(IHttpClientFactory httpClientFactory, ILogger<ReflectService> logger)
+    private readonly GitLabService _gitLabService;
+    public ReflectService(ILogger<ReflectService> logger, GitLabService gitLabService)
     {
-        _httpClientFactory = httpClientFactory;
         _logger = logger;
-    }
-
-    public async Task<List<GitLabCommit>> GetGitLabCommitHistory(string privateKey, string projectId, string author)
-    {
-        var client = _httpClientFactory.CreateClient();
-
-        client.DefaultRequestHeaders.Add("PRIVATE-TOKEN", privateKey);
-
-        var commits = new List<GitLabCommit>();
-
-        var page = 1;
-        bool hasMorePages = true;
-
-        while (hasMorePages)
-        {
-            var response =
-                await client.GetAsync(
-                    $"https://gitlab.com/api/v4/projects/{projectId}/repository/commits?page={page}&per_page=99&sort=asc&author={author}");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error while requesting history");
-            }
-
-            var content = await response.Content.ReadAsStringAsync();
-            var newCommits = JsonSerializer.Deserialize<List<GitLabCommit>>(content);
-            commits.AddRange(newCommits!);
-
-            page++;
-            if (newCommits!.Count == 0) hasMorePages = false;
-        }
-
-        System.Console.WriteLine($"{author} has this many commits: {commits.Count}");
-
-        return commits;
-    }
-    
-    public async Task<List<GitlabEvent>> GetGitLabEventHistory(string privateKey, string projectId, string author)
-    {
-        var client = _httpClientFactory.CreateClient();
-
-        client.DefaultRequestHeaders.Add("PRIVATE-TOKEN", privateKey);
-
-        var events = new List<GitlabEvent>();
-
-        var page = 1;
-        bool hasMorePages = true;
-
-        while (hasMorePages)
-        {
-            var response =
-                await client.GetAsync(
-                    $"https://gitlab.com/api/v4/events?page={page}&per_page=99&sort=asc&scope={projectId}");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error while requesting history");
-            }
-
-            var content = await response.Content.ReadAsStringAsync();
-            var newEvents = JsonSerializer.Deserialize<List<GitlabEvent>>(content);
-            events.AddRange(newEvents!);
-
-            page++;
-            if (newEvents!.Count == 0) hasMorePages = false;
-        }
-
-        System.Console.WriteLine($"{author} has this many events: {events.Count}");
-
-        return events;
+        _gitLabService = gitLabService;
     }
 
     public async Task ReflectCommitsToExistingRepo(
@@ -92,7 +20,7 @@ public class ReflectService
         string pathToRepo,
         string customCommitMessage = "Committed to Master")
     {
-        var commits = await GetGitLabCommitHistory(privateKey, projectId, author);
+        var commits = await _gitLabService.GetGitLabCommitHistory(privateKey, projectId, author);
 
         System.Console.WriteLine("Reflecting Commits...");
 
@@ -115,7 +43,7 @@ public class ReflectService
     public async Task ReflectEventsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo)
     {
 
-        var events = await GetGitLabEventHistory(privateKey, projectId, author);
+        var events = await _gitLabService.GetGitLabEventHistory(privateKey, projectId, author);
 
         System.Console.WriteLine("Reflecting Events...");
         

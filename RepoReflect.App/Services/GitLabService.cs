@@ -12,6 +12,20 @@ public class GitLabService
         _httpClientFactory = httpClientFactory;
     }
 
+    public async Task<(List<GitLabCommit> commits, List<GitlabEvent> events)> GetAllGitLabContributions(string privateKey, string projectId,
+        string author)
+    {
+        var getCommitsTask = GetGitLabCommits(privateKey, projectId, author);
+        var getEventsTask =  GetGitLabEvents(privateKey, projectId, author);
+
+        await Task.WhenAll(getCommitsTask, getEventsTask);
+
+        var commits = await getCommitsTask;
+        var events = await getEventsTask;
+        
+        return (commits, events);
+    }
+
     public async Task<List<GitLabCommit>> GetGitLabCommits(string privateKey, string projectId, string author)
     {
         var requestUri =

@@ -80,7 +80,7 @@ public class ReflectService
             if (newEvents!.Count == 0) hasMorePages = false;
         }
 
-        System.Console.WriteLine($"{author} has this many commits: {events.Count}");
+        System.Console.WriteLine($"{author} has this many events: {events.Count}");
 
         return events;
     }
@@ -108,7 +108,32 @@ public class ReflectService
         System.Console.WriteLine($"Successfully added {commits.Count} to {pathToRepo}");
     }
     
-    
+    public async Task ReflectEventsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo)
+    {
+
+        var events = await GetGitLabEventHistory(privateKey, projectId, author);
+
+        System.Console.WriteLine("Reflecting Events...");
+        
+        string message = "";
+        for (var i = 0; i < events.Count; i++)
+        {
+            message = events[i].ActionName + " " + events[i].TargetType ?? "unknown";
+            
+            //TODO: also edit the time of this commit
+            await Cli.Wrap("git")
+                .WithArguments($"commit --allow-empty --date \"{events[i].CreatedAt}\" -m \"{message}\" -m \"{events[i].Id}\"") 
+                .WithWorkingDirectory(pathToRepo)
+                .WithValidation(CommandResultValidation.None) // For some reason "git commit --allow-empty returns a non-zero exit code"
+                .ExecuteAsync();
+
+            var progress = i * 100 / events.Count;
+            System.Console.Write("\r{0}% ", progress);
+        }
+        System.Console.WriteLine("\r100%");
+        
+        System.Console.WriteLine($"Successfully added {events.Count} Events to {pathToRepo}");
+    }
 
     public async Task CreateGitRepo(string repoName, string repoDirPath, bool? isPrivate = false)
     {

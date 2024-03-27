@@ -6,10 +6,12 @@ namespace Console.App;
 public class Commands
 {
     private readonly ReflectService _reflectService;
+    private readonly RepositoryService _repositoryService;
 
-    public Commands(ReflectService reflectService)
+    public Commands(ReflectService reflectService, RepositoryService repositoryService)
     {
         _reflectService = reflectService;
+        _repositoryService = repositoryService;
     }
 
     //Author can be either author email or name
@@ -29,6 +31,6 @@ public class Commands
     [Command("create")]
     public Task CreateRepo([Option("n")] string name, [Option("rp")] string repoPath, bool? isPrivate)
     {
-        return _reflectService.CreateGitRepo(name, repoPath, isPrivate);
+        return _repositoryService.CreateGitRepo(name, repoPath, isPrivate);
     }
 }

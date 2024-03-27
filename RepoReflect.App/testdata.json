@@ -1,0 +1,304 @@
+[
+  {
+    "id": 3226603342,
+    "project_id": 55856165,
+    "action_name": "created",
+    "target_id": null,
+    "target_iid": null,
+    "target_type": null,
+    "author_id": 14437069,
+    "target_title": null,
+    "created_at": "2024-03-14T14:34:13.445Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2943537647,
+    "project_id": 17170378,
+    "action_name": "destroyed",
+    "target_id": null,
+    "target_iid": null,
+    "target_type": "Milestone",
+    "author_id": 14437069,
+    "target_title": null,
+    "created_at": "2023-11-01T11:26:08.572Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2610764304,
+    "project_id": 17170378,
+    "action_name": "approved",
+    "target_id": 225652421,
+    "target_iid": 5472,
+    "target_type": "MergeRequest",
+    "author_id": 14437069,
+    "target_title": "feat(banner-ads): add a scrollbar instead of truncating text [!5472]",
+    "created_at": "2023-05-24T14:18:24.544Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2604135227,
+    "project_id": 17170378,
+    "action_name": "closed",
+    "target_id": 224833076,
+    "target_iid": 5455,
+    "target_type": "MergeRequest",
+    "author_id": 14437069,
+    "target_title": "Resolve \"Add endpoint for getting all saved todos\"",
+    "created_at": "2023-05-22T09:11:22.069Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2596208675,
+    "project_id": 17170378,
+    "action_name": "deleted",
+    "target_id": null,
+    "target_iid": null,
+    "target_type": null,
+    "author_id": 14437069,
+    "target_title": null,
+    "created_at": "2023-05-17T12:40:51.302Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "push_data": {
+      "commit_count": 0,
+      "action": "removed",
+      "ref_type": "branch",
+      "commit_from": "ed9543468719a02e544dd60ad3e4df943b7ef76b",
+      "commit_to": null,
+      "ref": "feature/add-task-overview-created-later-than-date-to-modular-dashboard",
+      "commit_title": null,
+      "ref_count": null
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2596208613,
+    "project_id": 17170378,
+    "action_name": "accepted",
+    "target_id": 224265875,
+    "target_iid": 5448,
+    "target_type": "MergeRequest",
+    "author_id": 14437069,
+    "target_title": "Add TaskOverviewCreatedLaterThanDate on ModularDashboardSections and ModularDashboardHighlightItems",
+    "created_at": "2023-05-17T12:40:49.990Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2595918414,
+    "project_id": 17170378,
+    "action_name": "opened",
+    "target_id": 224265875,
+    "target_iid": 5448,
+    "target_type": "MergeRequest",
+    "author_id": 14437069,
+    "target_title": "Add TaskOverviewCreatedLaterThanDate on ModularDashboardSections and ModularDashboardHighlightItems",
+    "created_at": "2023-05-17T10:58:32.079Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2595903547,
+    "project_id": 17170378,
+    "action_name": "pushed new",
+    "target_id": null,
+    "target_iid": null,
+    "target_type": null,
+    "author_id": 14437069,
+    "target_title": null,
+    "created_at": "2023-05-17T10:53:12.190Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "push_data": {
+      "commit_count": 3,
+      "action": "created",
+      "ref_type": "branch",
+      "commit_from": null,
+      "commit_to": "ad266a400bf49cd53cf775b528de047f713f7c5d",
+      "ref": "feature/add-task-overview-created-later-than-date-to-modular-dashboard",
+      "commit_title": "Add migrations for adding property TaskOverviewCreatedLaterThanDate...",
+      "ref_count": null
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2586334715,
+    "project_id": 17170378,
+    "action_name": "pushed to",
+    "target_id": null,
+    "target_iid": null,
+    "target_type": null,
+    "author_id": 14437069,
+    "target_title": null,
+    "created_at": "2023-05-12T08:37:16.819Z",
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "push_data": {
+      "commit_count": 1,
+      "action": "pushed",
+      "ref_type": "branch",
+      "commit_from": "77ddfabb21a55a19819a7a325bc3d940d5245b3b",
+      "commit_to": "1b8e438f7a35461de6648198af92c472bed7c335",
+      "ref": "feat/auth/saml-sso-sp-flow",
+      "commit_title": "Rename SelfUrl to ApiUrl",
+      "ref_count": null
+    },
+    "author_username": "gabr0236"
+  },
+  {
+    "id": 2582709417,
+    "project_id": 17170378,
+    "action_name": "commented on",
+    "target_id": 1385856586,
+    "target_iid": 1385856586,
+    "target_type": "DiffNote",
+    "author_id": 14437069,
+    "target_title": "Enable SP initiated SAML SSO flow to accommodate external app login redirects",
+    "created_at": "2023-05-10T20:33:29.515Z",
+    "note": {
+      "id": 1385856586,
+      "type": "DiffNote",
+      "body": "Yes its case insensitive, we tested both :smile_cat:",
+      "attachment": null,
+      "author": {
+        "id": 14437069,
+        "username": "gabr0236",
+        "name": "Gabriel Haugbøl",
+        "state": "active",
+        "locked": false,
+        "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+        "web_url": "https://gitlab.com/gabr0236"
+      },
+      "created_at": "2023-05-10T20:33:28.993Z",
+      "updated_at": "2023-05-10T20:33:28.993Z",
+      "system": false,
+      "noteable_id": 222466183,
+      "noteable_type": "MergeRequest",
+      "project_id": 17170378,
+      "commit_id": null,
+      "position": {
+        "base_sha": "5f25e4772a04e64b8d2ebed566188ff4058cf0cb",
+        "start_sha": "7e6b5888b99847d5aafda553620fbb38b86b5de4",
+        "head_sha": "47afde5f86a3ebf36d75b9a6e4b86ceb918be411",
+        "old_path": "Connect/Connect.Api/Controllers/Auth/Sso/SamlSsoController.cs",
+        "new_path": "Connect/Connect.Api/Controllers/Auth/Sso/SamlSsoController.cs",
+        "position_type": "text",
+        "old_line": null,
+        "new_line": 145,
+        "line_range": {
+          "start": {
+            "line_code": "c472958c5a1c35f31d0813428ce213aa4a00461c_132_145",
+            "type": "new",
+            "old_line": null,
+            "new_line": 145
+          },
+          "end": {
+            "line_code": "c472958c5a1c35f31d0813428ce213aa4a00461c_132_145",
+            "type": "new",
+            "old_line": null,
+            "new_line": 145
+          }
+        }
+      },
+      "resolvable": true,
+      "resolved": true,
+      "resolved_by": {
+        "id": 8106571,
+        "username": "twast",
+        "name": "Sebastian Tibor Bakonyvari",
+        "state": "active",
+        "locked": false,
+        "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/8106571/avatar.png",
+        "web_url": "https://gitlab.com/twast"
+      },
+      "resolved_at": "2023-05-11T14:12:51.602Z",
+      "confidential": false,
+      "internal": false,
+      "noteable_iid": 5408,
+      "commands_changes": {}
+    },
+    "author": {
+      "id": 14437069,
+      "username": "gabr0236",
+      "name": "Gabriel Haugbøl",
+      "state": "active",
+      "locked": false,
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/14437069/avatar.png",
+      "web_url": "https://gitlab.com/gabr0236"
+    },
+    "author_username": "gabr0236"
+  }
+]

@@ -30,7 +30,7 @@ public class ReflectService
         {
             var response =
                 await client.GetAsync(
-                    $"https://gitlab.com/api/v4/projects/{projectId}/repository/commits?page={page}&per_page=99&author={author}");
+                    $"https://gitlab.com/api/v4/projects/{projectId}/repository/commits?page={page}&per_page=99&sort=asc&author={author}");
 
             if (!response.IsSuccessStatusCode)
             {

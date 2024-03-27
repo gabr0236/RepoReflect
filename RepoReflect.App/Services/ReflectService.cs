@@ -49,11 +49,45 @@ public class ReflectService
 
         return commits;
     }
-
-    public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo, string customCommitMessage = "Committed to master on private Gitlab repository")
+    
+    public async Task<List<GitlabEvent>> GetGitLabEventHistory(string privateKey, string projectId, string author)
     {
-        
-        var commits = await GetGitLabHistory(privateKey, projectId, author);
+        var client = _httpClientFactory.CreateClient();
+
+        client.DefaultRequestHeaders.Add("PRIVATE-TOKEN", privateKey);
+
+        var events = new List<GitlabEvent>();
+
+        var page = 1;
+        bool hasMorePages = true;
+
+        while (hasMorePages)
+        {
+            var response =
+                await client.GetAsync(
+                    $"https://gitlab.com/api/v4/events?page={page}&per_page=99&sort=asc&scope={projectId}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error while requesting history");
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            var newEvents = JsonSerializer.Deserialize<List<GitlabEvent>>(content);
+            events.AddRange(newEvents!);
+
+            page++;
+            if (newEvents!.Count == 0) hasMorePages = false;
+        }
+
+        System.Console.WriteLine($"{author} has this many commits: {events.Count}");
+
+        return events;
+    }
+
+    public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo, string customCommitMessage = "Committed to Master")
+    {
+        var commits = await GetGitLabCommitHistory(privateKey, projectId, author);
 
         System.Console.WriteLine("Reflecting Commits...");
 

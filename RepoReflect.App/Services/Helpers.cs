@@ -4,11 +4,10 @@ namespace Console.App.Services;
 
 public static class Helpers
 {
-    public static string GetEventName(GitlabEvent gitlabEvent, ILogger logger)
+    public static string GetEventName(GitlabEvent gitlabEvent)
     {
         if (string.IsNullOrWhiteSpace(gitlabEvent.ActionName))
         {
-            logger.LogDebug("Unknown event found with event id: {GitlabEventId}", gitlabEvent.Id);
             return "Unknown Event";
         }
 

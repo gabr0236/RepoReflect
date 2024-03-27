@@ -12,48 +12,37 @@ public class GitLabService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<List<GitLabCommit>> GetGitLabCommitHistory(string privateKey, string projectId, string author)
+    public async Task<List<GitLabCommit>> GetGitLabCommits(string privateKey, string projectId, string author)
     {
-        var client = _httpClientFactory.CreateClient();
+        var requestUri =
+            $"https://gitlab.com/api/v4/projects/{projectId}/repository/commits?author={author}";
 
-        client.DefaultRequestHeaders.Add("PRIVATE-TOKEN", privateKey);
-
-        var commits = new List<GitLabCommit>();
-
-        var page = 1;
-        bool hasMorePages = true;
-
-        while (hasMorePages)
-        {
-            var response =
-                await client.GetAsync(
-                    $"https://gitlab.com/api/v4/projects/{projectId}/repository/commits?page={page}&per_page=99&sort=asc&author={author}");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error while requesting history");
-            }
-
-            var content = await response.Content.ReadAsStringAsync();
-            var newCommits = JsonSerializer.Deserialize<List<GitLabCommit>>(content);
-            commits.AddRange(newCommits!);
-
-            page++;
-            if (newCommits!.Count == 0) hasMorePages = false;
-        }
-
+        var commits = await GetGitLabContributions<GitLabCommit>(privateKey, requestUri);
+        
         System.Console.WriteLine($"{author} has this many commits: {commits.Count}");
 
         return commits;
     }
     
-    public async Task<List<GitlabEvent>> GetGitLabEventHistory(string privateKey, string projectId, string author)
+    public async Task<List<GitlabEvent>> GetGitLabEvents(string privateKey, string projectId, string author)
+    {
+        var requestUri = $"https://gitlab.com/api/v4/events?scope={projectId}";
+
+        var events = await GetGitLabContributions<GitlabEvent>(privateKey, requestUri);
+        
+        System.Console.WriteLine($"{author} has this many events: {events.Count}");
+
+        return events;
+    }
+
+    //TODO: request uri must already have a previous url param as we are applying & below
+    private async Task<List<T>> GetGitLabContributions<T>(string privateKey, string requestUri)
     {
         var client = _httpClientFactory.CreateClient();
 
         client.DefaultRequestHeaders.Add("PRIVATE-TOKEN", privateKey);
 
-        var events = new List<GitlabEvent>();
+        var contributions = new List<T>();
 
         var page = 1;
         bool hasMorePages = true;
@@ -62,7 +51,7 @@ public class GitLabService
         {
             var response =
                 await client.GetAsync(
-                    $"https://gitlab.com/api/v4/events?page={page}&per_page=99&sort=asc&scope={projectId}");
+                    $"{requestUri}&page={page}&per_page=99&sort=asc");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -70,15 +59,13 @@ public class GitLabService
             }
 
             var content = await response.Content.ReadAsStringAsync();
-            var newEvents = JsonSerializer.Deserialize<List<GitlabEvent>>(content);
-            events.AddRange(newEvents!);
+            var newContributions = JsonSerializer.Deserialize<List<T>>(content);
+            contributions.AddRange(newContributions!);
 
             page++;
-            if (newEvents!.Count == 0) hasMorePages = false;
+            if (newContributions!.Count == 0) hasMorePages = false;
         }
-
-        System.Console.WriteLine($"{author} has this many events: {events.Count}");
-
-        return events;
+        
+        return contributions;
     }
 }

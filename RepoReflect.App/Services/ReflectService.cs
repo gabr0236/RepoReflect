@@ -19,7 +19,7 @@ public class ReflectService
         string pathToRepo,
         string customCommitMessage = "Committed to Master")
     {
-        var commits = await _gitLabService.GetGitLabCommitHistory(privateKey, projectId, author);
+        var commits = await _gitLabService.GetGitLabCommits(privateKey, projectId, author);
 
         System.Console.WriteLine("Reflecting...");
 
@@ -38,7 +38,7 @@ public class ReflectService
     public async Task ReflectEventsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo)
     {
 
-        var events = await _gitLabService.GetGitLabEventHistory(privateKey, projectId, author);
+        var events = await _gitLabService.GetGitLabEvents(privateKey, projectId, author);
 
         System.Console.WriteLine("Reflecting...");
         

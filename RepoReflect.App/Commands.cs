@@ -18,6 +18,13 @@ public class Commands
     {
         return _reflectService.ReflectCommitsToExistingRepo(privateKey, projectId, author, repoPath, customMessage);
     }
+    
+    //Author can be either author email or name
+    [Command("reflect-events")]
+    public Task ReflectEventsToExistingRepo(string privateKey, string projectId,string author, string repoPath)
+    {
+        return _reflectService.ReflectEventsToExistingRepo(privateKey, projectId, author, repoPath);
+    }
 
     [Command("create")]
     public Task CreateRepo([Option("n")] string name, [Option("rp")] string repoPath, bool? isPrivate)

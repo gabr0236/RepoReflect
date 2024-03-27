@@ -17,7 +17,7 @@ public record GitlabEvent(
     [property: JsonPropertyName("target_iid")]
     long? TargetIid,
     [property: JsonPropertyName("target_type")]
-    string TargetType,
+    string? TargetType,
     [property: JsonPropertyName("author_id")]
     long AuthorId,
     [property: JsonPropertyName("target_title")]
@@ -26,7 +26,7 @@ public record GitlabEvent(
     DateTime CreatedAt,
     [property: JsonPropertyName("author")] AuthorInfo Author,
     [property: JsonPropertyName("push_data")]
-    PushDataInfo PushData,
+    PushDataInfo? PushData,
     [property: JsonPropertyName("author_username")]
     string AuthorUsername
 );

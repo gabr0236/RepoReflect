@@ -49,7 +49,7 @@ public class GitLabService
         return events;
     }
 
-    //TODO: request uri must already have a previous url param as we are applying & below
+    //TODO: request uri must already have a previous url param as we are applying "&" below assuming previous "?"
     private async Task<List<T>> GetGitLabContributions<T>(string privateKey, string requestUri)
     {
         var client = _httpClientFactory.CreateClient();

@@ -14,4 +14,9 @@ public class Mapper
         //TODO: avoid this toString by initially casting long to string at json parsing? leave note in GitLabEvent on id Prop about changing type
         return new Contribution(gitlabEvent.Id.ToString(), gitlabEvent.CreatedAt, Helpers.GetEventName(gitlabEvent));
     }
+
+    public static List<Contribution> FromGitLabCommits(List<GitLabCommit> gitLabCommits) => gitLabCommits.Select(FromGitLabCommit).ToList();
+
+    public static List<Contribution> FromGitLabEvents(List<GitlabEvent> gitlabEvents) =>
+        gitlabEvents.Select(FromGitLabEvent).ToList();
 }

@@ -18,29 +18,41 @@ public class Commands
 
     //Author can be either author email or name
     [Command("reflect-commits")]
-    public Task ReflectCommitsToExistingRepo(string privateKey, string projectId,string author, string repoPath, [Option] string customMessage)
+    public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId,string author, string repoPath, [Option] string customMessage)
     {
         var commits = await _gitLabService.GetGitLabCommits(privateKey, projectId, author);
+
+        var contributions = Mapper.FromGitLabCommits(commits);
         
-        //TODO: to contributions
-        
-        return _reflectService.ReflectContributionsToExistingRepo(commits, repoPath);
+        await _reflectService.ReflectContributionsToExistingRepo(contributions, repoPath);
     }
     
     //Author can be either author email or name
     [Command("reflect-events")]
-    public Task ReflectEventsToExistingRepo(string privateKey, string projectId,string author, string repoPath)
+    public async Task ReflectEventsToExistingRepo(string privateKey, string projectId,string author, string repoPath)
     {
         var events = await _gitLabService.GetGitLabEvents(privateKey, projectId, author);
+
+        var contributions = Mapper.FromGitLabEvents(events);
         
-        //TODO: map to contributions
-        
-        return _reflectService.ReflectContributionsToExistingRepo(events, repoPath);
+        await _reflectService.ReflectContributionsToExistingRepo(contributions, repoPath);
     }
 
     [Command("create")]
     public Task CreateRepo([Option("n")] string name, [Option("rp")] string repoPath, bool? isPrivate)
     {
         return _repositoryService.CreateGitRepo(name, repoPath, isPrivate);
+    }
+
+    [Command("test")]
+    public async Task test()
+    {
+        var progress = 0;
+        for (var i = 0; i < 50; i++)
+        {
+            System.Console.WriteLine(progress);
+            progress = (i*100) / 50;
+            System.Console.Write("\r{0}%   ", progress);
+        }
     }
 }

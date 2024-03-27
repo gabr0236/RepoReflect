@@ -93,7 +93,6 @@ public class ReflectService
 
         for (var i = 0; i < commits.Count; i++)
         {
-            //TODO: also edit the time of this commit
             await Cli.Wrap("git")
                 .WithArguments($"commit --allow-empty --date \"{commits[i].CreatedAt}\" -m \"{customCommitMessage}\" -m \"{commits[i].Id}\"") 
                 .WithWorkingDirectory(pathToRepo)
@@ -105,7 +104,7 @@ public class ReflectService
         }
         System.Console.WriteLine("\r100%");
         
-        System.Console.WriteLine($"Successfully added {commits.Count} to {pathToRepo}");
+        System.Console.WriteLine($"Successfully added {commits.Count} Commits to {pathToRepo}");
     }
     
     public async Task ReflectEventsToExistingRepo(string privateKey, string projectId, string author, string pathToRepo)

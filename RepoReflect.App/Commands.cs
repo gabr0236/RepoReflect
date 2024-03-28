@@ -17,8 +17,19 @@ public class Commands
     }
 
     //Author can be either author email or name
+    [Command("reflect-all")]
+    public async Task ReflectContributions(string privateKey, string projectId, string author, string repoPath)
+    {
+        var (commits, events) = await _gitLabService.GetAllGitLabContributions(privateKey, projectId, author);
+
+        var contributions = Mapper.FromAll(commits, events);
+
+        await _reflectService.ReflectContributionsToExistingRepo(contributions, repoPath);
+    }
+
+    //Author can be either author email or name
     [Command("reflect-commits")]
-    public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId,string author, string repoPath, [Option] string customMessage)
+    public async Task ReflectCommitsToExistingRepo(string privateKey, string projectId,string author, string repoPath)
     {
         var commits = await _gitLabService.GetGitLabCommits(privateKey, projectId, author);
 

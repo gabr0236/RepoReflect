@@ -5,14 +5,6 @@ namespace Console.App.Services;
 
 public class ReflectService
 {
-    private readonly ILogger<ReflectService> _logger;
-    private readonly GitLabService _gitLabService;
-    public ReflectService(ILogger<ReflectService> logger, GitLabService gitLabService)
-    {
-        _logger = logger;
-        _gitLabService = gitLabService;
-    }
-    
     private async Task ReflectContribution(Contribution contribution,string pathToRepo)
     {
         await Cli.Wrap("git")

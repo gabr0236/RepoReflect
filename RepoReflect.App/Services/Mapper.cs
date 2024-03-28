@@ -19,4 +19,14 @@ public class Mapper
 
     public static List<Contribution> FromGitLabEvents(List<GitlabEvent> gitlabEvents) =>
         gitlabEvents.Select(FromGitLabEvent).ToList();
+
+    public static List<Contribution> FromAll(List<GitLabCommit> commits, List<GitlabEvent> events)
+    {
+        var contributions = FromGitLabCommits(commits);
+        contributions.AddRange(FromGitLabEvents(events));
+        
+        contributions.Sort((a,b) => a.CreatedAt.CompareTo(b.CreatedAt));
+
+        return contributions;
+    }
 }
